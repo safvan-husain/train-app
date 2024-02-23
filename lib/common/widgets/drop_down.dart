@@ -66,7 +66,7 @@ class MyDropDown<T> extends StatelessWidget {
             height: 30,
             child: Text(
               value.toString(),
-              style: GoogleFonts.poppins(),
+              style: GoogleFonts.outfit(),
               overflow: TextOverflow.ellipsis,
             ),
           ),
