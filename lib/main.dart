@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:train_app/screens/home/bloc/home_bloc.dart';
 import 'package:train_app/screens/home/main_screen.dart';
 import 'package:train_app/theme/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => HomeBloc(),
+      ),
+      // BlocProvider(
+      //   create: (context) => SubjectBloc(),
+      // ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

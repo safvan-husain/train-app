@@ -32,43 +32,78 @@ class MyTheme {
     highlightColor: const Color.fromARGB(255, 108, 145, 194),
     // cardColor: const Color.fromARGB(255, 240, 45, 58),
     textTheme: TextTheme(
-        titleSmall: GoogleFonts.poppins(
+      titleSmall: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
+      ),
+      titleMedium: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      titleLarge: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: const TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 25,
+        ),
+      ),
+      headlineLarge: GoogleFonts.russoOne(
+        color: Colors.black,
+        textStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 25,
           color: Colors.black,
-          textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
         ),
-        titleMedium: GoogleFonts.poppins(
-          color: Colors.white,
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        titleLarge: GoogleFonts.poppins(
-          color: const Color.fromARGB(255, 76, 91, 97),
-          textStyle: const TextStyle(
-            overflow: TextOverflow.ellipsis,
-            fontSize: 25,
-          ),
-        ),
-        headlineLarge: GoogleFonts.russoOne(
-          color: const Color.fromARGB(255, 243, 240, 236),
-          textStyle: TextStyle(
-            overflow: TextOverflow.ellipsis,
-            fontSize: 25,
-            color: const Color.fromARGB(255, 243, 240, 236),
-          ),
-        ),
-        headlineSmall: GoogleFonts.poppins(
+      ),
+      headlineSmall: GoogleFonts.outfit(
+        color: const Color.fromARGB(255, 37, 38, 39),
+        textStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 14,
           color: const Color.fromARGB(255, 37, 38, 39),
-          textStyle: TextStyle(
-            overflow: TextOverflow.ellipsis,
-            fontSize: 14,
-            color: const Color.fromARGB(255, 37, 38, 39),
-          ),
         ),
-        displayLarge: GoogleFonts.poppins(
-          color: const Color.fromARGB(255, 253, 191, 6),
-          textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16),
-        )),
+      ),
+      headlineMedium: GoogleFonts.outfit(
+        color: const Color.fromARGB(255, 37, 38, 39),
+        textStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 14,
+          color: const Color.fromARGB(255, 37, 38, 39),
+        ),
+      ),
+      displayLarge: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16),
+      ),
+      displayMedium: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16),
+      ),
+      displaySmall: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16),
+      ),
+      bodyMedium: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 12,
+        ),
+      ),
+      bodySmall: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 10,
+        ),
+      ),
+      bodyLarge: GoogleFonts.outfit(
+        color: Colors.black,
+        textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16),
+      ),
+    ),
     iconTheme: const IconThemeData(
       color: Color.fromARGB(255, 145, 151, 174),
     ),
@@ -104,10 +139,10 @@ class MyTheme {
     highlightColor: const Color.fromARGB(255, 108, 145, 194),
     // cardColor: const Color.fromARGB(255, 240, 45, 58),
     // textTheme: TextTheme(
-    // titleSmall: GoogleFonts.poppins(
+    // titleSmall: GoogleFonts.outfit(
     //     color: const Color.fromARGB(255, 39, 48, 67),
     //     textStyle: const TextStyle(overflow: TextOverflow.ellipsis)),
-    //     titleMedium: GoogleFonts.poppins(
+    //     titleMedium: GoogleFonts.outfit(
     //       color: const Color.fromARGB(255, 145, 151, 174),
     //     ),
     //     titleLarge: GoogleFonts.russoOne(
@@ -118,16 +153,16 @@ class MyTheme {
     //       color: const Color.fromARGB(255, 243, 240, 236),
     //       textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 25.r),
     //     ),
-    //     labelLarge: GoogleFonts.poppins(
+    //     labelLarge: GoogleFonts.outfit(
     //       color: const Color.fromARGB(255, 243, 240, 236),
     //       textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 14.r),
     //     ),
-    //     bodySmall: GoogleFonts.poppins(
+    //     bodySmall: GoogleFonts.outfit(
     //       color: const Color.fromARGB(255, 145, 151, 174),
     //       textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 12.r),
     //     ),
-    //     displayLarge: GoogleFonts.poppins(
-    //       color: const Color.fromARGB(255, 253, 191, 6),
+    //     displayLarge: GoogleFonts.outfit(
+    //       color: Colors.black,
     //       textStyle: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16.r),
     //     )),
     iconTheme: const IconThemeData(
