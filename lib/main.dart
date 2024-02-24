@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:train_app/screens/auth/login_screen.dart';
+import 'package:train_app/screens/auth/registen_screen.dart';
 import 'package:train_app/screens/home/bloc/home_bloc.dart';
 import 'package:train_app/screens/home/main_screen.dart';
 import 'package:train_app/theme/theme.dart';
@@ -26,8 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: MyTheme.light,
+      theme: MyTheme.light, darkTheme: MyTheme.dark,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
+      // home: const LoginScreen(),
       home: const MainScreen(),
     );
   }

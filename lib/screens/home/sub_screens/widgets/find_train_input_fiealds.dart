@@ -20,11 +20,17 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
     with TickerProviderStateMixin {
   late TabController controller;
 
-  final StationCodeHelper _stationCodeHelper = StationCodeHelper();
   String from = '';
   String to = '';
+  bool isDepatureField = true;
+  late final TextEditingController depature;
+  late final TextEditingController arrival;
   @override
   void initState() {
+    depature =
+        TextEditingController(text: context.read<HomeBloc>().state.depature);
+    arrival =
+        TextEditingController(text: context.read<HomeBloc>().state.arrival);
     controller = TabController(length: 2, vsync: this);
     controller.addListener(() {
       setState(() {});
@@ -39,8 +45,6 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
   }
 
   bool _isOnFrom = true;
-  final TextEditingController _fromController = TextEditingController();
-  final TextEditingController _toController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +56,14 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
           margin: const EdgeInsets.all(30),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20),
             boxShadow: state.isOnSearch
                 ? null
                 : [
                     BoxShadow(
                       color:
-                          Colors.grey.withOpacity(0.5), // Color of the shadow
+                          Theme.of(context).splashColor, // Color of the shadow
                       spreadRadius: 2, // Spread radius
                       blurRadius: 4, // Blur radius
                       offset: const Offset(0, 3), // Shadow offset
@@ -74,7 +78,7 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                 controller: controller,
                 dividerColor: Colors.blue,
                 // indicatorWeight: 10,
-                indicatorColor: Colors.deepOrange,
+                indicatorColor: Theme.of(context).focusColor,
                 indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
                 tabs: [
                   Padding(
@@ -83,8 +87,8 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                       "IRTC",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: controller.index == 0
-                                ? Colors.deepOrange
-                                : Colors.black87,
+                                ? Theme.of(context).focusColor
+                                : Colors.grey,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -93,8 +97,8 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                     "METRO",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: controller.index == 1
-                              ? Colors.deepOrange
-                              : Colors.black87,
+                              ? Theme.of(context).focusColor
+                              : Colors.grey,
                           fontWeight: FontWeight.w600,
                         ),
                   )
@@ -114,16 +118,15 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                             : MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            height: 150,
+                            height: 160,
                             child: Row(
                               children: [
-                                if (_stationCodeHelper.stations
-                                        .containsKey(from) &&
-                                    _stationCodeHelper.stations
-                                        .containsKey(to)) ...[
+                                if (true) ...[
+                                  // if (state.depature != null &&
+                                  //     state.arrival != null) ...[
                                   Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
                                         height: 30,
@@ -131,9 +134,9 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.only(
                                             right: 10, top: 15),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
-                                        ),
+                                        // decoration: BoxDecoration(
+                                        //   border: Border.all(),
+                                        // ),
                                         child: Row(
                                           children: [
                                             const Padding(
@@ -148,8 +151,7 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                             Expanded(
                                               child: Center(
                                                 child: Text(
-                                                  _stationCodeHelper
-                                                      .stations[from]!,
+                                                  "",
                                                   maxLines: 1,
                                                   style: GoogleFonts.outfit(
                                                     fontSize: 8,
@@ -162,7 +164,6 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                           ],
                                         ),
                                       ),
-                                      const Icon(Icons.recycling),
                                       Container(
                                         height: 30,
                                         width: 60,
@@ -170,9 +171,9 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                         margin: const EdgeInsets.only(
                                           right: 10,
                                         ),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
-                                        ),
+                                        // decoration: BoxDecoration(
+                                        //   border: Border.all(),
+                                        // ),
                                         child: Row(
                                           children: [
                                             const Padding(
@@ -187,8 +188,7 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                             Expanded(
                                               child: Center(
                                                 child: Text(
-                                                  _stationCodeHelper
-                                                      .stations[to]!,
+                                                  "",
                                                   maxLines: 1,
                                                   style: GoogleFonts.outfit(
                                                     fontSize: 8,
@@ -211,48 +211,104 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       TextField(
-                                        controller: _fromController,
+                                        controller: depature,
                                         onTap: () {
                                           _isOnFrom = true;
+                                          isDepatureField = true;
                                           if (!state.isOnSearch) {
                                             context
                                                 .read<HomeBloc>()
                                                 .add(EnterStationCode());
                                           }
                                         },
-                                        onSubmitted: (value) {
-                                          context
-                                              .read<HomeBloc>()
-                                              .add(StationCodeSelected());
-                                        },
-                                        decoration: const InputDecoration(
-                                            label: Text("From"),
-                                            border: OutlineInputBorder()),
+                                        onSubmitted: (value) {},
+                                        decoration: InputDecoration(
+                                          label: Text(
+                                            "From",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(color: Colors.grey),
+                                          ),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                            color: Colors.grey,
+                                          )),
+                                          prefix: state.depature == null
+                                              ? null
+                                              : Container(
+                                                  height: 20,
+                                                  width: 60,
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    // bottom: 10,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.grey),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 8.0),
+                                                        child: Icon(
+                                                          Icons.circle,
+                                                          color: Colors.green,
+                                                          size: 15,
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            state.stationCodeHelper
+                                                                        .stations[
+                                                                    state
+                                                                        .depature] ??
+                                                                "",
+                                                            maxLines: 1,
+                                                            style: GoogleFonts
+                                                                .outfit(
+                                                              fontSize: 8,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .focusColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                        ),
                                         onChanged: (value) {
                                           context.read<HomeBloc>().add(
-                                              FilterStations(
-                                                  searchTerm: value));
-                                          // setState(() {});
-                                          // values = _stationCodeHelper
-                                          //     .stations.keys
-                                          //     .where((element) =>
-                                          //         element.startsWith(
-                                          //             value.toUpperCase()))
-                                          //     .toList();
+                                                FilterStations(
+                                                    searchTerm: value),
+                                              );
                                         },
                                       ),
                                       InkWell(
                                           onTap: () {
-                                            var temp = _fromController.text;
-                                            _fromController.text =
-                                                _toController.text;
-                                            _toController.text = temp;
+                                            String temp = arrival.text;
+                                            arrival.text = depature.text;
+                                            depature.text = temp;
                                             setState(() {});
+                                            context
+                                                .read<HomeBloc>()
+                                                .add(SwitchStations());
                                           },
                                           child: const Icon(Icons.swap_vert)),
                                       TextField(
-                                        controller: _toController,
+                                        controller: arrival,
                                         onTap: () {
+                                          isDepatureField = false;
                                           _isOnFrom = false;
                                           if (!state.isOnSearch) {
                                             context
@@ -260,25 +316,67 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                                 .add(EnterStationCode());
                                           }
                                         },
-                                        onSubmitted: (value) {
-                                          context
-                                              .read<HomeBloc>()
-                                              .add(StationCodeSelected());
-                                        },
-                                        decoration: const InputDecoration(
-                                            label: Text("To"),
-                                            border: OutlineInputBorder()),
+                                        onSubmitted: (value) {},
+                                        decoration: InputDecoration(
+                                          prefix: state.arrival == null
+                                              ? null
+                                              : Container(
+                                                  height: 20,
+                                                  width: 60,
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    // bottom: 10,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.grey),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 8.0),
+                                                        child: Icon(
+                                                          Icons.train,
+                                                          color: Colors.green,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            state.stationCodeHelper
+                                                                        .stations[
+                                                                    state
+                                                                        .arrival] ??
+                                                                "",
+                                                            maxLines: 1,
+                                                            style: GoogleFonts
+                                                                .outfit(
+                                                              fontSize: 8,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .focusColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                          label: Text("To"),
+                                          border: OutlineInputBorder(),
+                                        ),
                                         onChanged: (value) {
                                           context.read<HomeBloc>().add(
                                               FilterStations(
                                                   searchTerm: value));
-                                          setState(() {});
-                                          // values = _stationCodeHelper
-                                          //     .stations.keys
-                                          //     .where((element) =>
-                                          //         element.startsWith(
-                                          //             value.toUpperCase()))
-                                          //     .toList();
                                         },
                                       ),
                                     ],
@@ -329,7 +427,7 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(double.infinity, 40),
-                                backgroundColor: Colors.deepOrange,
+                                backgroundColor: Theme.of(context).focusColor,
                               ),
                               onPressed: () {
                                 context.read<HomeBloc>().add(GetTrainResults());
@@ -355,16 +453,17 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                   return InkWell(
                                     onTap: () {
                                       if (_isOnFrom) {
-                                        _fromController.text =
-                                            state.values[index];
+                                        depature.text = state.values[index];
                                       } else {
-                                        _toController.text =
-                                            state.values[index];
+                                        arrival.text = state.values[index];
                                       }
                                       FocusScope.of(context).unfocus();
-                                      context
-                                          .read<HomeBloc>()
-                                          .add(StationCodeSelected());
+                                      context.read<HomeBloc>().add(
+                                            StationCodeSelected(
+                                              stationCode: state.values[index],
+                                              isDepatureField: isDepatureField,
+                                            ),
+                                          );
                                     },
                                     child: Container(
                                       padding: index == 0

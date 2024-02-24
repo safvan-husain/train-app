@@ -1,10 +1,149 @@
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class MyTicketScreen extends StatelessWidget {
   const MyTicketScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            child: ToggleSwitch(
+              minWidth: 100,
+              borderWidth: 1,
+              borderColor: [
+                Theme.of(context).primaryColorLight,
+              ],
+              activeBorders: [
+                Border.all(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  width: 2,
+                )
+              ],
+              cornerRadius: 20.0,
+              activeBgColors: [
+                [Theme.of(context).primaryColorLight],
+                [Theme.of(context).primaryColorLight],
+                [Theme.of(context).primaryColorLight],
+              ],
+              activeFgColor: Colors.white,
+              inactiveBgColor: Theme.of(context).scaffoldBackgroundColor,
+              inactiveFgColor: Theme.of(context).primaryColorLight,
+              initialLabelIndex: 0,
+              totalSwitches: 3,
+              labels: ['Active', 'Complete', "Canceled "],
+              radiusStyle: true,
+              onToggle: (index) {
+                print('switched to: $index');
+              },
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).splashColor, // Color of the shadow
+                  spreadRadius: 2, // Spread radius
+                  blurRadius: 4, // Blur radius
+                  offset: const Offset(0, 3), // Shadow offset
+                ),
+              ],
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            height: 150,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hydrabad",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        "chennai express",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Text(
+                        "Date",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Text(
+                        "Seat",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Kazipet",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(
+                              "Fee : \$23",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Text(
+                              "15 February 2024",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Text(
+                              "G5",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        // color: Colors.yellow,
+                        // height: 80,
+                        width: 10,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              7,
+                              (index) => Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 2,
+                                      horizontal: 5,
+                                    ),
+                                    height: 13,
+                                    child: VerticalDivider(
+                                      color: Theme.of(context).focusColor,
+                                    ),
+                                  )),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

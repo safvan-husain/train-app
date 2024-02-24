@@ -12,19 +12,26 @@ class HomeState {
 
   final bool isOnSearch;
   final bool isOnResult;
+  final String? depature;
+  final String? arrival;
   final DateTime date;
   final List<String> values;
+  final StationCodeHelper stationCodeHelper;
 
   const HomeState({
     required this.instance,
+    this.depature,
+    this.arrival,
     required this.date,
     required this.values,
     required this.isOnSearch,
     required this.isOnResult,
+    required this.stationCodeHelper,
   });
 
   factory HomeState.initial() {
     return HomeState(
+      stationCodeHelper: StationCodeHelper(),
       instance: HomeStateInstanceType.initial,
       date: DateTime.now(),
       values: [],
@@ -40,8 +47,13 @@ class HomeState {
     bool? isOnResult,
     DateTime? date,
     List<String>? values,
+    String? depature,
+    String? arrival,
   }) {
     return HomeState(
+      depature: depature ?? this.depature,
+      arrival: arrival ?? this.depature,
+      stationCodeHelper: stationCodeHelper ?? this.stationCodeHelper,
       instance: instance ?? this.instance,
       isOnSearch: isOnSearch ?? this.isOnSearch,
       isOnResult: isOnResult ?? this.isOnResult,

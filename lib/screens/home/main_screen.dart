@@ -26,19 +26,20 @@ class _MainScreenState extends State<MainScreen> {
             body: Stack(
               children: [
                 Scaffold(
-                  backgroundColor:
-                      state.isOnSearch ? Colors.white : Colors.transparent,
+                  backgroundColor: state.isOnSearch
+                      ? Theme.of(context).canvasColor
+                      : Colors.transparent,
                   appBar: AppBar(
                     title: Text(
-                      "Hii Good Morning 👋",
+                      "Hi Good Morning👋",
                       style: GoogleFonts.outfit(
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    actions:   const [
-                    Icon(
+                    actions: const [
+                      Icon(
                         Icons.more_vert,
                         color: Colors.white,
                       )
@@ -89,19 +90,9 @@ class _MainScreenState extends State<MainScreen> {
                     child: TabBarView(
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                        BookTicketScreen(
-                            // onTap: (isOnSearch) {
-                            //   if (!isOnSearch) {
-                            //     FocusScope.of(context).unfocus();
-                            //   }
-
-                            //   setState(() {
-                            //     _isOnSearch = isOnSearch;
-                            //   });
-                            // },//TODO
-                            ),
-                        FindTrainScreen(),
+                        BookTicketScreen(),
                         MyTicketScreen(),
+                        FindTrainScreen(),
                       ],
                     ),
                   ),

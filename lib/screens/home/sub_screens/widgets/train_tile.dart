@@ -11,10 +11,19 @@ class TrainTail extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-          width: 0.5,
-        ),
+        color: Theme.of(context).cardColor,
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).splashColor, // Color of the shadow
+            spreadRadius: 2, // Spread radius
+            blurRadius: 4, // Blur radius
+            offset: const Offset(-1, 1), // Shadow offset
+          ),
+        ],
+        // border: Border.all(
+        //   // color: Colors.grey,
+        //   width: 0.5,
+        // ),
         borderRadius: BorderRadius.circular(10),
       ),
       height: 160,
@@ -32,6 +41,9 @@ class TrainTail extends StatelessWidget {
                       Text(
                         "110-Train Exprs",
                         style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 5,
                       ),
                       Text(
                         "Duration 1h 9m",
@@ -93,14 +105,20 @@ class TrainTail extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               // height: 50,
               child: ListView.builder(
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.all(10),
+                    margin: EdgeInsets.only(
+                      left: index == 0 ? 0 : 8,
+                      right: index == 4 ? 0 : 8,
+                      bottom: 10,
+                      top: 10,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.greenAccent),
                       color: Color.fromARGB(255, 210, 245, 211),

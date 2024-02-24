@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:train_app/helpers/station_code_helper.dart';
 
@@ -13,7 +16,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<StationCodeSelected>((event, emit) {
-      emit(state.copyWith(isOnSearch: false));
+      if (event.isDepatureField) {
+        log("depature changing");
+
+        emit(state.copyWith(
+          isOnSearch: false,
+          depature: event.stationCode,
+        ));
+      } else {
+        log("arrival changing");
+        emit(state.copyWith(
+          isOnSearch: false,
+          arrival: event.stationCode,
+        ));
+      }
+    });
+
+    on<SwitchStations>((event, emit) {
+      String? temp = state.depature;
+      emit(state.copyWith(
+        depature: state.arrival,
+        arrival: temp,
+      ));
     });
 
     on<GetTrainResults>((event, emit) {

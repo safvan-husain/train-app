@@ -17,9 +17,22 @@ class TrainListResult extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Select your train",
-                    style: Theme.of(context).textTheme.titleLarge,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Select your train",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          right: 8.0,
+                          // bottom: 10,
+                          left: 10,
+                        ),
+                        child: Icon(Icons.calendar_month_outlined),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: 40,
@@ -53,10 +66,6 @@ class TrainListResult extends StatelessWidget {
                             },
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(Icons.calendar_today),
-                        )
                       ],
                     ),
                   ),

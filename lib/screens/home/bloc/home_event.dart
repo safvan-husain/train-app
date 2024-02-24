@@ -6,7 +6,14 @@ sealed class HomeEvent {}
 
 class EnterStationCode implements HomeEvent {}
 
-class StationCodeSelected implements HomeEvent {}
+class StationCodeSelected implements HomeEvent {
+  final String stationCode;
+  final bool isDepatureField;
+  StationCodeSelected({
+    required this.stationCode,
+    required this.isDepatureField,
+  });
+}
 
 class DateSelected implements HomeEvent {
   final DateTime date;
@@ -22,6 +29,8 @@ class FilterStations implements HomeEvent {
     required this.searchTerm,
   });
 }
+
+class SwitchStations implements HomeEvent {}
 
 class GetTrainResults implements HomeEvent {}
 
