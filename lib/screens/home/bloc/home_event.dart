@@ -32,6 +32,10 @@ class FilterStations implements HomeEvent {
 
 class SwitchStations implements HomeEvent {}
 
+class ShowSettings implements HomeEvent {}
+
+class ShowMainScreen implements HomeEvent {}
+
 class GetTrainResults implements HomeEvent {}
 
 class CancelTrainResult implements HomeEvent {}

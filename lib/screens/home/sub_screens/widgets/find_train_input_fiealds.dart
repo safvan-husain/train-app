@@ -58,17 +58,17 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: state.isOnSearch
-                ? null
-                : [
-                    BoxShadow(
-                      color:
-                          Theme.of(context).splashColor, // Color of the shadow
-                      spreadRadius: 2, // Spread radius
-                      blurRadius: 4, // Blur radius
-                      offset: const Offset(0, 3), // Shadow offset
-                    ),
-                  ],
+            // boxShadow: state.isOnSearch
+            //     ? null
+            //     : [
+            //         BoxShadow(
+            //           color: Theme.of(context)
+            //               .scaffoldBackgroundColor, // Color of the shadow
+            //           spreadRadius: 2, // Spread radius
+            //           blurRadius: 4, // Blur radius
+            //           offset: const Offset(0, 3), // Shadow offset
+            //         ),
+            //       ],
           ),
           child: Column(
             // mainAxisSize: MainAxisSize.min,
@@ -121,178 +121,193 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                             height: 160,
                             child: Row(
                               children: [
-                                if (true) ...[
-                                  // if (state.depature != null &&
-                                  //     state.arrival != null) ...[
-                                  Column(
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  width: 40,
+                                  child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      Container(
-                                        height: 30,
-                                        width: 60,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(
-                                            right: 10, top: 15),
-                                        // decoration: BoxDecoration(
-                                        //   border: Border.all(),
-                                        // ),
-                                        child: Row(
-                                          children: [
-                                            const Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 8.0),
-                                              child: Icon(
-                                                Icons.circle,
-                                                color: Colors.green,
-                                                size: 15,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  "",
-                                                  maxLines: 1,
-                                                  style: GoogleFonts.outfit(
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.deepOrange,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 15,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          child: VerticalDivider(
+                                            indent: 20,
+                                            endIndent: 20,
+                                          ),
                                         ),
                                       ),
-                                      Container(
-                                        height: 30,
-                                        width: 60,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(
-                                          right: 10,
-                                        ),
-                                        // decoration: BoxDecoration(
-                                        //   border: Border.all(),
-                                        // ),
-                                        child: Row(
-                                          children: [
-                                            const Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 8.0),
-                                              child: Icon(
-                                                Icons.train,
-                                                color: Colors.green,
-                                                size: 20,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Center(
-                                                child: Text(
-                                                  "",
-                                                  maxLines: 1,
-                                                  style: GoogleFonts.outfit(
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.deepOrange,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      Icon(
+                                        Icons.train,
+                                        color: Colors.green,
+                                        size: 20,
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
+                                if (false)
+                                  if (state.depature != null &&
+                                      state.arrival != null)
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                        top: 20,
+                                        bottom: 20,
+                                        right: 10,
+                                      ),
+                                      width: 60,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            state.stationCodeHelper
+                                                    .stations[state.depature] ??
+                                                "Null",
+                                            maxLines: 1,
+                                            style: GoogleFonts.outfit(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  Theme.of(context).focusColor,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              alignment: Alignment.centerLeft,
+                                              // child: VerticalDivider(),
+                                            ),
+                                          ),
+                                          Text(
+                                            state.stationCodeHelper
+                                                    .stations[state.arrival] ??
+                                                "Null",
+                                            maxLines: 1,
+                                            style: GoogleFonts.outfit(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  Theme.of(context).focusColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      TextField(
-                                        controller: depature,
-                                        onTap: () {
-                                          _isOnFrom = true;
-                                          isDepatureField = true;
-                                          if (!state.isOnSearch) {
-                                            context
-                                                .read<HomeBloc>()
-                                                .add(EnterStationCode());
-                                          }
-                                        },
-                                        onSubmitted: (value) {},
-                                        decoration: InputDecoration(
-                                          label: Text(
-                                            "From",
-                                            style: Theme.of(context)
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: TextField(
+                                          controller: depature,
+                                          onTap: () {
+                                            _isOnFrom = true;
+                                            isDepatureField = true;
+                                            if (!state.isOnSearch) {
+                                              context
+                                                  .read<HomeBloc>()
+                                                  .add(EnterStationCode());
+                                            }
+                                          },
+                                          onSubmitted: (value) {},
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            suffix: Text(
+                                              state.stationCodeHelper.stations[
+                                                      state.depature] ??
+                                                  "",
+                                              maxLines: 1,
+                                              style: GoogleFonts.outfit(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .focusColor,
+                                              ),
+                                            ),
+                                            hintText: "From",
+
+                                            hintStyle: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
                                                 .copyWith(color: Colors.grey),
+
+                                            // border: OutlineInputBorder(
+                                            //     borderSide: BorderSide(
+                                            //   color: Colors.grey,
+                                            // )),
+                                            // prefix: state.depature == null
+                                            //     ? null
+                                            //     : Container(
+                                            //         height: 20,
+                                            //         width: 60,
+                                            //         alignment: Alignment.center,
+                                            //         margin:
+                                            //             const EdgeInsets.only(
+                                            //           left: 10,
+                                            //           right: 10,
+                                            //           // bottom: 10,
+                                            //         ),
+                                            //         decoration: BoxDecoration(
+                                            //           border: Border.all(
+                                            //               color: Colors.grey),
+                                            //         ),
+                                            //         child: Row(
+                                            //           children: [
+                                            //             const Padding(
+                                            //               padding:
+                                            //                   EdgeInsets.only(
+                                            //                       left: 8.0),
+                                            //               child: Icon(
+                                            //                 Icons.circle,
+                                            //                 color: Colors.green,
+                                            //                 size: 15,
+                                            //               ),
+                                            //             ),
+                                            //             Expanded(
+                                            //               child: Center(
+                                            //                 child: Text(
+                                            //                   state.stationCodeHelper
+                                            //                               .stations[
+                                            //                           state
+                                            //                               .depature] ??
+                                            //                       "",
+                                            //                   maxLines: 1,
+                                            //                   style: GoogleFonts
+                                            //                       .outfit(
+                                            //                     fontSize: 8,
+                                            //                     fontWeight:
+                                            //                         FontWeight
+                                            //                             .bold,
+                                            //                     color: Theme.of(
+                                            //                             context)
+                                            //                         .focusColor,
+                                            //                   ),
+                                            //                 ),
+                                            //               ),
+                                            //             ),
+                                            //           ],
+                                            //         ),
+                                            //       ),
                                           ),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                            color: Colors.grey,
-                                          )),
-                                          prefix: state.depature == null
-                                              ? null
-                                              : Container(
-                                                  height: 20,
-                                                  width: 60,
-                                                  alignment: Alignment.center,
-                                                  margin: const EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10,
-                                                    // bottom: 10,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8.0),
-                                                        child: Icon(
-                                                          Icons.circle,
-                                                          color: Colors.green,
-                                                          size: 15,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Center(
-                                                          child: Text(
-                                                            state.stationCodeHelper
-                                                                        .stations[
-                                                                    state
-                                                                        .depature] ??
-                                                                "",
-                                                            maxLines: 1,
-                                                            style: GoogleFonts
-                                                                .outfit(
-                                                              fontSize: 8,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .focusColor,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                                          onChanged: (value) {
+                                            context.read<HomeBloc>().add(
+                                                  FilterStations(
+                                                      searchTerm: value),
+                                                );
+                                          },
                                         ),
-                                        onChanged: (value) {
-                                          context.read<HomeBloc>().add(
-                                                FilterStations(
-                                                    searchTerm: value),
-                                              );
-                                        },
                                       ),
                                       InkWell(
                                           onTap: () {
@@ -305,79 +320,52 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                                 .add(SwitchStations());
                                           },
                                           child: const Icon(Icons.swap_vert)),
-                                      TextField(
-                                        controller: arrival,
-                                        onTap: () {
-                                          isDepatureField = false;
-                                          _isOnFrom = false;
-                                          if (!state.isOnSearch) {
-                                            context
-                                                .read<HomeBloc>()
-                                                .add(EnterStationCode());
-                                          }
-                                        },
-                                        onSubmitted: (value) {},
-                                        decoration: InputDecoration(
-                                          prefix: state.arrival == null
-                                              ? null
-                                              : Container(
-                                                  height: 20,
-                                                  width: 60,
-                                                  alignment: Alignment.center,
-                                                  margin: const EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10,
-                                                    // bottom: 10,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8.0),
-                                                        child: Icon(
-                                                          Icons.train,
-                                                          color: Colors.green,
-                                                          size: 20,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Center(
-                                                          child: Text(
-                                                            state.stationCodeHelper
-                                                                        .stations[
-                                                                    state
-                                                                        .arrival] ??
-                                                                "",
-                                                            maxLines: 1,
-                                                            style: GoogleFonts
-                                                                .outfit(
-                                                              fontSize: 8,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .focusColor,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                          label: Text("To"),
-                                          border: OutlineInputBorder(),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
                                         ),
-                                        onChanged: (value) {
-                                          context.read<HomeBloc>().add(
-                                              FilterStations(
-                                                  searchTerm: value));
-                                        },
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: TextField(
+                                          controller: arrival,
+                                          onTap: () {
+                                            isDepatureField = false;
+                                            _isOnFrom = false;
+                                            if (!state.isOnSearch) {
+                                              context
+                                                  .read<HomeBloc>()
+                                                  .add(EnterStationCode());
+                                            }
+                                          },
+                                          onSubmitted: (value) {},
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            suffix: Text(
+                                              state.stationCodeHelper.stations[
+                                                      state.arrival] ??
+                                                  "",
+                                              maxLines: 1,
+                                              style: GoogleFonts.outfit(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .focusColor,
+                                              ),
+                                            ),
+                                            hintText: "To",
+                                            hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(color: Colors.grey),
+                                            // border: OutlineInputBorder(),
+                                          ),
+                                          onChanged: (value) {
+                                            context.read<HomeBloc>().add(
+                                                FilterStations(
+                                                    searchTerm: value));
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -433,13 +421,14 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                                 context.read<HomeBloc>().add(GetTrainResults());
                               },
                               child: Text(
-                                "Search Train",
+                                "Search Trains",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
                                     .copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
+                                      fontSize: 22,
                                     ),
                               ),
                             ),

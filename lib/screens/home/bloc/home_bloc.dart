@@ -44,6 +44,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(isOnResult: true));
     });
 
+    on<ShowSettings>((event, emit) {
+      emit(
+        state.copyWith(instance: HomeStateInstanceType.settings),
+      );
+    });
+
+    on<ShowMainScreen>((event, emit) {
+      emit(state.copyWith(instance: HomeStateInstanceType.initial));
+    });
+
     on<CancelTrainResult>((event, emit) {
       emit(state.copyWith(isOnResult: false));
     });

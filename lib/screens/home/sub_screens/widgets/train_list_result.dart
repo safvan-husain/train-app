@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:train_app/screens/home/sub_screens/widgets/live_status_view.dart';
 import 'package:train_app/screens/home/sub_screens/widgets/train_tile.dart';
 
 class TrainListResult extends StatelessWidget {
@@ -17,12 +18,78 @@ class TrainListResult extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Select your train",
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .titleLarge!
+                  //           .copyWith(fontSize: 22),
+                  //     ),
+                  //     const Padding(
+                  //       padding: EdgeInsets.only(
+                  //         right: 8.0,
+                  //         // bottom: 10,
+                  //         left: 10,
+                  //       ),
+                  //       child: Icon(Icons.calendar_month_outlined),
+                  //     )
+                  //   ],
+                  // ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Select your train",
-                        style: Theme.of(context).textTheme.titleLarge,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "02 feb",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(fontSize: 22),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                        width: 4,
+                        child: VerticalDivider(),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Center(
+                            child: Text(
+                              "Hydrabad",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    fontSize: 18,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.amber,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Center(
+                            child: Text(
+                              "Mumbai",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    fontSize: 18,
+                                  ),
+                            ),
+                          ),
+                        ),
                       ),
                       const Padding(
                         padding: EdgeInsets.only(
@@ -30,7 +97,7 @@ class TrainListResult extends StatelessWidget {
                           // bottom: 10,
                           left: 10,
                         ),
-                        child: Icon(Icons.calendar_month_outlined),
+                        child: Icon(Icons.edit),
                       )
                     ],
                   ),
@@ -53,9 +120,11 @@ class TrainListResult extends StatelessWidget {
                                 ),
                                 decoration: index != 0
                                     ? null
-                                    : const BoxDecoration(
+                                    : BoxDecoration(
                                         border: Border(
-                                          bottom: BorderSide(),
+                                          bottom: BorderSide(
+                                            color: Theme.of(context).focusColor,
+                                          ),
                                         ),
                                       ),
                                 child: Text(
@@ -73,7 +142,22 @@ class TrainListResult extends StatelessWidget {
               ),
             );
           }
-          return const TrainTail();
+          return TrainTail(
+            liveStatus: () {
+              showModalBottomSheet(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                context: context,
+                builder: (context) => const LiveStatusView(15),
+                // constraints: BoxConstraints(maxHeight: 400),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+              );
+            },
+          );
         });
   }
 }

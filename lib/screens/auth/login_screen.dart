@@ -6,6 +6,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -38,48 +40,63 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   TextField(
                     decoration: InputDecoration(
-                      hintText: "Username",
-                      prefixIcon: Icon(FontAwesomeIcons.user),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: Colors.blue,
+                        hintText: "Username",
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.user,
+                          color: Colors.grey,
                         ),
-                      ),
-                    ),
+                        border: InputBorder.none,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey)),
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: "Email",
-                      prefixIcon: Icon(Icons.mail_outline),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                        hintText: "Email",
+                        prefixIcon:
+                            Icon(Icons.mail_outline, color: Colors.grey),
+                        border: InputBorder.none,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey)),
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: "Password",
-                      prefixIcon: Icon(Icons.lock_outline),
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).hoverColor),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
+                        hintText: "Password",
+                        prefixIcon:
+                            Icon(Icons.lock_outline, color: Colors.grey),
+                        suffixIcon: Icon(
+                          FontAwesomeIcons.eyeSlash,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                        border: InputBorder.none,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey)),
                   ),
                   Text(
                     "Forgot Passowrd?",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context).focusColor,
+                          color: Colors.grey,
                           fontSize: 14,
                         ),
                   )
                 ]
                     .map(
                       (e) => Container(
-                          height: 70,
-                          padding: e is Text
+                          // height: 70,
+                          decoration: e is Text
+                              ? null
+                              : BoxDecoration(
+                                  // color: Theme.of(context).highlightColor,
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                          margin: e is Text
                               ? const EdgeInsets.symmetric(vertical: 0)
                               : const EdgeInsets.symmetric(vertical: 10),
                           child: e),
@@ -101,7 +118,8 @@ class LoginScreen extends StatelessWidget {
                 child: Text(
                   "Login",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).cardColor,
+                        color: Colors.white,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -123,13 +141,20 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(width: 40, child: Divider()),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.abc),
-                  Icon(Icons.abc),
-                  Icon(Icons.abc),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * .1),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Image.asset(
+                        'assets/icons/google${isDarkMode ? "-dark" : ""}.png'),
+                    Image.asset(
+                        'assets/icons/twitter${isDarkMode ? "-dark" : ""}.png'),
+                    Image.asset(
+                        'assets/icons/apple${isDarkMode ? "-dark" : ""}.png')
+                  ],
+                ),
               ),
               Center(
                 child: RichText(

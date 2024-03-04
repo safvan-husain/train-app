@@ -5,6 +5,7 @@ enum HomeStateInstanceType {
   initial,
   form,
   result,
+  settings,
 }
 
 class HomeState {
