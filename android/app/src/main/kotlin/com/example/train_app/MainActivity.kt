@@ -1,4 +1,4 @@
-package com.example.train_app
+package com.starkin.railway
 
 import io.flutter.embedding.android.FlutterActivity
 

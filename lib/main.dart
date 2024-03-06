@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:train_app/screens/auth/initial/first_screen.dart';
-import 'package:train_app/screens/auth/login_screen.dart';
+import 'package:train_app/screens/auth/bloc/auth_bloc.dart';
 import 'package:train_app/screens/auth/registen_screen.dart';
-import 'package:train_app/screens/auth/verification_screen.dart';
 import 'package:train_app/screens/home/bloc/home_bloc.dart';
 import 'package:train_app/screens/home/main_screen.dart';
 import 'package:train_app/theme/theme.dart';
@@ -14,9 +12,9 @@ void main() {
       BlocProvider(
         create: (context) => HomeBloc(),
       ),
-      // BlocProvider(
-      //   create: (context) => SubjectBloc(),
-      // ),
+      BlocProvider(
+        create: (context) => AuthBloc(),
+      ),
     ],
     child: const MyApp(),
   ));
@@ -34,8 +32,8 @@ class MyApp extends StatelessWidget {
       darkTheme: MyTheme.dark,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: FirstScreen(),
-      // home: const MainScreen(),
+      // home: FirstScreen(),
+      home: const RegisterScreen(),
     );
   }
 }
