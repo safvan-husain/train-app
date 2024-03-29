@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:get/state_manager.dart";
 import "package:toggle_switch/toggle_switch.dart";
+import "package:train_app/common/widgets/custom_dialogue.dart";
+import "package:train_app/global_state/user_state_controller.dart";
 import "package:train_app/screens/home/bloc/home_bloc.dart";
 
 class SettingsScreen extends StatelessWidget {
@@ -57,17 +60,24 @@ class SettingsScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(
-                height: 60,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.blueAccent,
+              GetBuilder<UserController>(builder: (s) {
+                return SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.blueAccent,
+                    ),
+                    title: Obx(
+                        () => Text(s.user.value?.name ?? "No Name assigned")),
+                    subtitle: Text(
+                      s.user.value?.email ??
+                          s.user.value?.phone ??
+                          "No Id provided",
+                    ),
                   ),
-                  title: Text("My Name"),
-                  subtitle: Text("+91 9876543210"),
-                ),
-              ),
+                );
+              }),
               ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (context, index) => Container(
@@ -125,19 +135,27 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 itemCount: settingsTileModels.length,
               ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: const BoxDecoration(
-                    border: Border(
-                  top: BorderSide(color: Colors.grey),
-                )),
-                child: Text(
-                  "LogOut ?",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Colors.red,
-                      ),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const CustomDialuge(),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: const BoxDecoration(
+                      border: Border(
+                    top: BorderSide(color: Colors.grey),
+                  )),
+                  child: Text(
+                    "LogOut ?",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.red,
+                        ),
+                  ),
                 ),
               )
             ],

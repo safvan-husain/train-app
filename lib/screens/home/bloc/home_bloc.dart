@@ -2,8 +2,13 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:meta/meta.dart';
+import 'package:train_app/global_state/user_state_controller.dart';
 import 'package:train_app/helpers/station_code_helper.dart';
+import 'package:train_app/screens/auth/initial/splash_screen.dart';
+import 'package:train_app/screens/auth/login_screen.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -13,6 +18,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeState.initial()) {
     on<EnterStationCode>((event, emit) {
       emit(state.copyWith(isOnSearch: true));
+    });
+
+    on<LogOutUser>((event, emit) {
+      UserController.instance.logOutUser();
+      Get.offAll(() => LoginScreen());
+      emit(HomeState.initial());
     });
 
     on<StationCodeSelected>((event, emit) {

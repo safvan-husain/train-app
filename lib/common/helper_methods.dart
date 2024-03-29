@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Helper {
   static String formatDate(DateTime dateTime) {
     // List of months to map the month index to the month name
@@ -17,5 +19,9 @@ class Helper {
     String formattedDate = "$day $monthName $year";
 
     return formattedDate;
+  }
+
+  static showSnackBar(String content) {
+    Get.snackbar("Hello", "snackbar");
   }
 }

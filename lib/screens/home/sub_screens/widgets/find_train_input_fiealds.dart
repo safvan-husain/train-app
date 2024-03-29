@@ -79,7 +79,7 @@ class _FindTrainsFiealdState extends State<FindTrainsFieald>
                 dividerColor: Colors.blue,
                 // indicatorWeight: 10,
                 indicatorColor: Theme.of(context).focusColor,
-                indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
+                // indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
                 tabs: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),

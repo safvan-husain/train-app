@@ -1,10 +1,10 @@
-
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:train_app/common/update_controller.dart';
 // import 'package:toggle_switch/toggle_switch.dart';
 import 'package:train_app/screens/home/bloc/home_bloc.dart';
 import 'package:train_app/screens/home/sub_screens/book_ticket_screen.dart';
@@ -21,6 +21,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    AppUpdateController.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -44,6 +50,8 @@ class _MainScreenState extends State<MainScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    leading: SizedBox(),
+                    leadingWidth: 0,
                     actions: [
                       Container(
                         padding: const EdgeInsets.all(10),
@@ -78,24 +86,37 @@ class _MainScreenState extends State<MainScreen> {
                           },
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          context.read<HomeBloc>().add(ShowSettings());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: const Icon(
-                            Icons.settings,
-                            color: Colors.white,
+                      if (state.instance != HomeStateInstanceType.settings)
+                        InkWell(
+                          onTap: () {
+                            context.read<HomeBloc>().add(ShowSettings());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: const Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      )
+                        )
+                      else
+                        InkWell(
+                          onTap: () {
+                            context.read<HomeBloc>().add(ShowMainScreen());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: const Icon(
+                              Icons.home,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
                     ],
                     backgroundColor: Theme.of(context).primaryColorLight,
                     bottom: state.instance == HomeStateInstanceType.settings
                         ? null
                         : TabBar(
-                            isScrollable: true,
                             tabs: [
                               Text(
                                 "Book Ticket",

@@ -39,3 +39,5 @@ class ShowMainScreen implements HomeEvent {}
 class GetTrainResults implements HomeEvent {}
 
 class CancelTrainResult implements HomeEvent {}
+
+class LogOutUser implements HomeEvent {}

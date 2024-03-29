@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:train_app/screens/auth/bloc/auth_bloc.dart';
+import 'package:train_app/screens/auth/bloc/auth_state_event.dart';
+import 'package:train_app/screens/auth/login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+  RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +38,17 @@ class RegisterScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  Text("Login with you email ID"),
+                  const Text("Login with you email ID"),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextField(
+                    controller: _nameController,
                     decoration: InputDecoration(
                         hintText: "Username",
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           FontAwesomeIcons.user,
                           color: Colors.grey,
                         ),
@@ -48,11 +59,19 @@ class RegisterScreen extends StatelessWidget {
                             .copyWith(color: Colors.grey)),
                   ),
                   TextField(
+                    controller: _phoneController,
+                    inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     decoration: InputDecoration(
-                        hintText: "Email",
-                        prefixIcon: Icon(
-                          Icons.mail_outline,
-                          color: Colors.grey,
+                        hintText: "Phone",
+                        prefixIconConstraints:
+                            const BoxConstraints(maxWidth: 80),
+                        prefixIcon: Center(
+                          child: Text(
+                            "🇮🇳  +91  ",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                                fontSize: 16, color: Colors.black),
+                          ),
                         ),
                         border: InputBorder.none,
                         hintStyle: Theme.of(context)
@@ -61,13 +80,14 @@ class RegisterScreen extends StatelessWidget {
                             .copyWith(color: Colors.grey)),
                   ),
                   TextField(
+                    controller: _passwordController,
                     decoration: InputDecoration(
                         hintText: "Password",
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.lock_outline,
                           color: Colors.grey,
                         ),
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           FontAwesomeIcons.eyeSlash,
                           color: Colors.grey,
                           size: 20,
@@ -79,28 +99,16 @@ class RegisterScreen extends StatelessWidget {
                             .copyWith(color: Colors.grey)),
                   ),
                   TextField(
+                    controller: _confirmController,
                     decoration: InputDecoration(
                         hintText: "Confirm Password",
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.lock_outline,
                           color: Colors.grey,
                         ),
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           FontAwesomeIcons.eyeSlash,
                           size: 20,
-                          color: Colors.grey,
-                        ),
-                        border: InputBorder.none,
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey)),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        hintText: "Phone number",
-                        prefixIcon: Icon(
-                          FontAwesomeIcons.phone,
                           color: Colors.grey,
                         ),
                         border: InputBorder.none,
@@ -129,7 +137,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(
+                  minimumSize: const Size(
                     double.infinity,
                     50,
                   ),
@@ -138,7 +146,30 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   backgroundColor: Theme.of(context).focusColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (_passwordController.text.isEmpty) {
+                    Get.snackbar(
+                      "Invalid",
+                      "Password is required",
+                      colorText: Colors.deepOrange,
+                      backgroundColor: Color.fromARGB(255, 152, 152, 164),
+                    );
+                    return;
+                  }
+                  if (_passwordController.text == _confirmController.text) {
+                    AuthBloc.instance.add(AuthRegister(
+                      _nameController.text,
+                      _phoneController.text,
+                      _passwordController.text,
+                    ));
+                  } else {
+                    Get.snackbar(
+                      'Invaild',
+                      "Password mismatch",
+                      colorText: Colors.deepOrange,
+                    );
+                  }
+                },
                 child: Text(
                   "Continue",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -148,20 +179,25 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
               Center(
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: 'I have an account? ',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    TextSpan(
-                      text: ' Login',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context).primaryColorLight,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ]),
+                child: InkWell(
+                  onTap: () {
+                    Get.offAll(() => LoginScreen());
+                  },
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'I have an account? ',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      TextSpan(
+                        text: ' Login',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Theme.of(context).primaryColorLight,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ]),
+                  ),
                 ),
               )
             ],

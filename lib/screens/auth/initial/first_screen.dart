@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:train_app/screens/auth/login_screen.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
@@ -107,7 +109,7 @@ class _FirstScreenState extends State<FirstScreen> {
           setState(
             () {
               if (currentContentIndex == 2) {
-                currentContentIndex = 0;
+                Get.off(() => LoginScreen());
               } else {
                 currentContentIndex++;
               }

@@ -1,8 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
+import 'package:train_app/screens/auth/bloc/auth_bloc.dart';
+import 'package:train_app/screens/auth/bloc/auth_state_event.dart';
+
 class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
+  final String phone;
+  final String name;
+  final String password;
+  const VerificationScreen({
+    Key? key,
+    required this.phone,
+    required this.name,
+    required this.password,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +60,18 @@ class VerificationScreen extends StatelessWidget {
                 showFieldAsBox: true,
                 //runs when a code is typed in
                 onCodeChanged: (String code) {
+                  log(code);
                   //handle validation or checks here
                 },
                 //runs when every textfield is filled
-                onSubmit: (v) async {}, // end onSubmit
+                onSubmit: (v) async {
+                  AuthBloc.instance.add(VerifyOtpEvent(
+                    v,
+                    phone,
+                    name,
+                    password,
+                  ));
+                }, // end onSubmit
               ),
               Padding(
                 padding:
@@ -82,7 +104,9 @@ class VerificationScreen extends StatelessWidget {
                   ),
                   backgroundColor: Theme.of(context).focusColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // AuthBloc.instance.add(VerifyOtpEvent(v, phone));
+                },
                 child: Text(
                   "Verify",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(

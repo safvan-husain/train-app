@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:train_app/screens/auth/bloc/auth_bloc.dart';
+import 'package:train_app/screens/auth/bloc/auth_state_event.dart';
+import 'package:get/get.dart';
+import 'package:train_app/screens/auth/registen_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final TextEditingController _phoneController =
+      TextEditingController(text: '9072817417');
+  final TextEditingController _passwordController =
+      TextEditingController(text: 'pass');
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +49,33 @@ class LoginScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  // TextField(
+                  //   decoration: InputDecoration(
+                  //       hintText: "Username",
+                  //       prefixIcon: Icon(
+                  //         FontAwesomeIcons.user,
+                  //         color: Colors.grey,
+                  //       ),
+                  //       border: InputBorder.none,
+                  //       hintStyle: Theme.of(context)
+                  //           .textTheme
+                  //           .bodyMedium!
+                  //           .copyWith(color: Colors.grey)),
+                  // ),
                   TextField(
+                    controller: _phoneController,
+                    inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     decoration: InputDecoration(
-                        hintText: "Username",
-                        prefixIcon: Icon(
-                          FontAwesomeIcons.user,
-                          color: Colors.grey,
+                        hintText: "Phone",
+                        prefixIconConstraints:
+                            const BoxConstraints(maxWidth: 80),
+                        prefixIcon: Center(
+                          child: Text(
+                            "🇮🇳  +91  ",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                                fontSize: 16, color: Colors.black),
+                          ),
                         ),
                         border: InputBorder.none,
                         hintStyle: Theme.of(context)
@@ -52,17 +84,7 @@ class LoginScreen extends StatelessWidget {
                             .copyWith(color: Colors.grey)),
                   ),
                   TextField(
-                    decoration: InputDecoration(
-                        hintText: "Email",
-                        prefixIcon:
-                            Icon(Icons.mail_outline, color: Colors.grey),
-                        border: InputBorder.none,
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey)),
-                  ),
-                  TextField(
+                    controller: _passwordController,
                     decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon:
@@ -114,7 +136,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                   backgroundColor: Theme.of(context).focusColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  AuthBloc.instance.add(LoginEvent(
+                    phone: _phoneController.text,
+                    password: _passwordController.text,
+                  ));
+                },
                 child: Text(
                   "Login",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -147,8 +174,13 @@ class LoginScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.asset(
-                        'assets/icons/google${isDarkMode ? "-dark" : ""}.png'),
+                    InkWell(
+                      onTap: () {
+                        context.read<AuthBloc>().add(AuthRegisterGoogle());
+                      },
+                      child: Image.asset(
+                          'assets/icons/google${isDarkMode ? "-dark" : ""}.png'),
+                    ),
                     Image.asset(
                         'assets/icons/twitter${isDarkMode ? "-dark" : ""}.png'),
                     Image.asset(
@@ -157,20 +189,25 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Center(
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Don\'t have an account? ',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    TextSpan(
-                      text: ' Sign Up',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context).primaryColorLight,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ]),
+                child: InkWell(
+                  onTap: () {
+                    Get.to(RegisterScreen());
+                  },
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'Don\'t have an account? ',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      TextSpan(
+                        text: ' Sign Up',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Theme.of(context).primaryColorLight,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ]),
+                  ),
                 ),
               )
             ],
