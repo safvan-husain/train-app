@@ -9,6 +9,7 @@ import 'package:train_app/common/error.dart';
 import 'package:train_app/common/response.dart';
 import 'package:train_app/global_state/user_state_controller.dart';
 import 'package:train_app/models/user_model.dart';
+import 'package:train_app/screens/home/bloc/home_bloc.dart';
 import 'package:train_app/screens/home/main_screen.dart';
 
 class AuthServices {
@@ -23,10 +24,18 @@ class AuthServices {
           String errorMessage =
               e.response?.data['message'] ?? "An error occurred";
           // Display the error message in a snackbar
-          Get.snackbar("Error", errorMessage);
+          Get.snackbar(
+            "Error",
+            errorMessage,
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
+          );
         } else {
           // If there's no response, display a generic error message
-          Get.snackbar("Error", "An error occurred");
+          Get.snackbar(
+            "Error",
+            "An error occurred",
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
+          );
         }
       },
     ));
@@ -56,7 +65,7 @@ class AuthServices {
           "token": firebaseToken,
         },
       );
-      return UserModel.fromJson(result.data);
+      return UserModel.fromMap(result.data);
     } catch (e) {
       print(e);
       throw AppError("error on registerUser services");
@@ -88,7 +97,7 @@ class AuthServices {
         },
       );
       print(result.data);
-      return UserModel.fromJson(result.data);
+      return UserModel.fromMap(result.data);
     } catch (e) {
       print(e);
       throw AppError("error on login user service");
@@ -112,11 +121,7 @@ class AuthServices {
     String name,
     String password,
   ) async {
-    // return UserModel(name: 'Safvan');
     try {
-      // var response = AppResponse2(
-      //     statusCode: 200, data: {'name': "Safvan", "phone": "790000000"});
-
       await _dio.get("${CV.baseUri}/verify-otp?phone=$phone&&otp=$otp");
       return await registerUser(name: name, phone: phone, password: password);
     } catch (e) {

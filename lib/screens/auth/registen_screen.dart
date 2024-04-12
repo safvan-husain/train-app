@@ -152,7 +152,7 @@ class RegisterScreen extends StatelessWidget {
                       "Invalid",
                       "Password is required",
                       colorText: Colors.deepOrange,
-                      backgroundColor: Color.fromARGB(255, 152, 152, 164),
+                      backgroundColor: Get.theme.scaffoldBackgroundColor,
                     );
                     return;
                   }
@@ -167,6 +167,7 @@ class RegisterScreen extends StatelessWidget {
                       'Invaild',
                       "Password mismatch",
                       colorText: Colors.deepOrange,
+                      backgroundColor: Get.theme.scaffoldBackgroundColor,
                     );
                   }
                 },

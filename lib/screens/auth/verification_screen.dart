@@ -6,22 +6,23 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 import 'package:train_app/screens/auth/bloc/auth_bloc.dart';
 import 'package:train_app/screens/auth/bloc/auth_state_event.dart';
+import 'package:train_app/screens/home/bloc/home_bloc.dart';
 
 class VerificationScreen extends StatelessWidget {
   final String phone;
   final String name;
   final String password;
+  final bool isAuth;
   const VerificationScreen({
     Key? key,
     required this.phone,
     required this.name,
     required this.password,
+    this.isAuth = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -41,9 +42,8 @@ class VerificationScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Text(
                   'We have sent an OTP code to +934658716585 Enter the OTP code below to verify',
                   textAlign: TextAlign.center,
@@ -65,12 +65,18 @@ class VerificationScreen extends StatelessWidget {
                 },
                 //runs when every textfield is filled
                 onSubmit: (v) async {
-                  AuthBloc.instance.add(VerifyOtpEvent(
-                    v,
-                    phone,
-                    name,
-                    password,
-                  ));
+                  if (isAuth) {
+                    AuthBloc.instance.add(VerifyOtpEvent(
+                      v,
+                      phone,
+                      name,
+                      password,
+                    ));
+                  } else {
+                    log("it is not auth so calling home verigy");
+                    HomeBloc.instance
+                        .add(VerifyOtpHomeEvent(v, name, phone, password));
+                  }
                 }, // end onSubmit
               ),
               Padding(
@@ -78,7 +84,7 @@ class VerificationScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 child: GestureDetector(
                   onTap: () async {},
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -95,7 +101,7 @@ class VerificationScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(
+                  minimumSize: const Size(
                     double.infinity,
                     50,
                   ),

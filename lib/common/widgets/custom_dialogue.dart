@@ -42,7 +42,10 @@ class DailoueCard extends StatelessWidget {
           ),
           Text(
             "Are you sure you want to leave?",
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Colors.grey),
           ),
           const SizedBox(height: 20),
           GestureDetector(
@@ -77,7 +80,7 @@ class DailoueCard extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: Colors.grey),
               ),
               child: Text(
                 "Cancel",

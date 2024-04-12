@@ -20,8 +20,4 @@ class Helper {
 
     return formattedDate;
   }
-
-  static showSnackBar(String content) {
-    Get.snackbar("Hello", "snackbar");
-  }
 }

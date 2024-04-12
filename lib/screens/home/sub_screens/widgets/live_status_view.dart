@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:train_app/services/ad_services.dart';
 
 class LiveStatusView extends StatefulWidget {
   final int count;
@@ -9,6 +11,7 @@ class LiveStatusView extends StatefulWidget {
 }
 
 class _LiveStatusViewState extends State<LiveStatusView> {
+  RewardedAd? _rewardedAd;
   int postion = 20;
   @override
   void initState() {
@@ -17,7 +20,24 @@ class _LiveStatusViewState extends State<LiveStatusView> {
         postion = 220;
       });
     });
+    loadAd();
     super.initState();
+  }
+
+  void loadAd() {
+    RewardedAd.load(
+        adUnitId: AdServices.adUnitId,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.show(onUserEarnedReward: (canceld, rewaded) {});
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('RewardedAd failed to load: $error');
+          },
+        ));
   }
 
   @override
@@ -53,12 +73,15 @@ class _LiveStatusViewState extends State<LiveStatusView> {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(fontSize: 20),
+                      .copyWith(fontSize: 20, color: Colors.white),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   "048606",
-                  style: Theme.of(context).textTheme.bodyMedium!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
                 ),
               ],
             ),
@@ -76,7 +99,10 @@ class _LiveStatusViewState extends State<LiveStatusView> {
                       (index) => Container(
                             width: 70,
                             height: 60,
-                            child: Text("04:30"),
+                            child: Text(
+                              "04:30",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
                             alignment: Alignment.center,
                           )),
                 ),
@@ -123,8 +149,24 @@ class _LiveStatusViewState extends State<LiveStatusView> {
                                 height: 60,
                                 child: ListTile(
                                   title: Text("Train No. $index"),
-                                  subtitle: Text("$index km Platform"),
-                                  trailing: Text("04:30"),
+                                  subtitle: Text(
+                                    "$index km Platform",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                          fontSize: 16,
+                                        ),
+                                  ),
+                                  trailing: Text(
+                                    "04:30",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                          fontSize: 16,
+                                        ),
+                                  ),
                                 ),
                               )),
                     ),

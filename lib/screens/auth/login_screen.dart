@@ -10,9 +10,9 @@ import 'package:train_app/screens/auth/registen_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _phoneController =
-      TextEditingController(text: '9072817417');
+      TextEditingController(text: '');
   final TextEditingController _passwordController =
-      TextEditingController(text: 'pass');
+      TextEditingController(text: '');
   LoginScreen({super.key});
 
   @override
@@ -43,7 +43,10 @@ class LoginScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  Text("Login with you email ID"),
+                  Text(
+                    "Login with you email ID",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ],
               ),
               Column(
@@ -88,8 +91,8 @@ class LoginScreen extends StatelessWidget {
                     decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon:
-                            Icon(Icons.lock_outline, color: Colors.grey),
-                        suffixIcon: Icon(
+                            const Icon(Icons.lock_outline, color: Colors.grey),
+                        suffixIcon: const Icon(
                           FontAwesomeIcons.eyeSlash,
                           color: Colors.grey,
                           size: 20,
@@ -127,7 +130,7 @@ class LoginScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(
+                  minimumSize: const Size(
                     double.infinity,
                     50,
                   ),
@@ -154,7 +157,7 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 40, child: Divider()),
+                  const SizedBox(width: 40, child: Divider()),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -165,7 +168,7 @@ class LoginScreen extends StatelessWidget {
                           .copyWith(color: Colors.grey),
                     ),
                   ),
-                  SizedBox(width: 40, child: Divider()),
+                  const SizedBox(width: 40, child: Divider()),
                 ],
               ),
               Padding(

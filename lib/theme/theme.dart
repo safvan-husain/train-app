@@ -139,7 +139,7 @@ class MyTheme {
     dividerColor: const Color.fromARGB(231, 37, 112, 79),
     // focusColor: const Color.fromARGB(255, 25, 196, 42),
     focusColor: const Color.fromARGB(255, 239, 184, 17),
-    splashColor: const Color.fromARGB(224, 37, 38, 39),
+    splashColor: Color.fromARGB(223, 80, 82, 84),
     cardColor: const Color.fromARGB(255, 31, 32, 31),
     highlightColor: const Color.fromARGB(255, 246, 248, 250),
     textTheme: TextTheme(

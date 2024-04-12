@@ -1,8 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:train_app/services/ad_services.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 
-class MyTicketScreen extends StatelessWidget {
+class MyTicketScreen extends StatefulWidget {
   const MyTicketScreen({super.key});
+
+  @override
+  State<MyTicketScreen> createState() => _MyTicketScreenState();
+}
+
+class _MyTicketScreenState extends State<MyTicketScreen> {
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdServices.adUnitId,
+      request: const AdRequest(),
+      size: AdSize.largeBanner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void initState() {
+    loadAd();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +180,51 @@ class MyTicketScreen extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+          ExpandableCarousel(
+            estimatedPageSize: MediaQuery.of(context).size.width,
+            options: CarouselOptions(
+              showIndicator: false,
+              padEnds: false,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 4),
+              viewportFraction: 1,
+            ),
+            items: [1, 2].map((i) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Builder(
+                  builder: (BuildContext context) {
+                    return GestureDetector(
+                      onTap: () async {},
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/card_back.png',
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context)
+                              .size
+                              .width, // Set your desired width here
+                          height: 170,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }).toList(),
+          ),
+          if (_bannerAd != null)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SafeArea(
+                child: SizedBox(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                ),
+              ),
+            ),
         ],
       ),
     );

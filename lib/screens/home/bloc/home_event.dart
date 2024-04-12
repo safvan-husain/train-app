@@ -6,6 +6,8 @@ sealed class HomeEvent {}
 
 class EnterStationCode implements HomeEvent {}
 
+class ResetHomeEvent implements HomeEvent {}
+
 class StationCodeSelected implements HomeEvent {
   final String stationCode;
   final bool isDepatureField;
@@ -41,3 +43,31 @@ class GetTrainResults implements HomeEvent {}
 class CancelTrainResult implements HomeEvent {}
 
 class LogOutUser implements HomeEvent {}
+
+class LoadingEnded implements HomeEvent {}
+
+class CheckSeatAvailiblity implements HomeEvent {}
+
+class EditProfileEvent implements HomeEvent {
+  final String name;
+  final String phone;
+  final String email;
+  const EditProfileEvent(
+    this.name,
+    this.phone,
+    this.email,
+  );
+}
+
+class VerifyOtpHomeEvent implements HomeEvent {
+  final String otp;
+  final String name;
+  final String phone;
+  final String email;
+  const VerifyOtpHomeEvent(
+    this.otp,
+    this.name,
+    this.phone,
+    this.email,
+  );
+}

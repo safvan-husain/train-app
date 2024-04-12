@@ -5,7 +5,7 @@ class LightStorage {
   static final box = GetStorage();
 
   static void storeUser(UserModel user) {
-    box.write('user', user.toRawJson());
+    box.write('user', user.toJson());
   }
 
   static void logOutUser() {
@@ -15,7 +15,7 @@ class LightStorage {
   static UserModel? getUser() {
     String? jsonUser = box.read<String?>('user');
     if (jsonUser != null) {
-      return UserModel.fromRawJson(jsonUser);
+      return UserModel.fromJson(jsonUser);
     }
     return null;
   }

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:train_app/common/error.dart';
-import 'package:train_app/common/response.dart';
 import 'package:train_app/global_state/user_state_controller.dart';
 import 'package:train_app/models/user_model.dart';
 import 'package:train_app/screens/auth/bloc/auth_state_event.dart';
@@ -12,7 +10,6 @@ import 'package:train_app/screens/auth/initial/first_screen.dart';
 import 'package:train_app/screens/auth/verification_screen.dart';
 import 'package:train_app/screens/home/main_screen.dart';
 import 'package:train_app/services/auth_services.dart';
-import 'package:train_app/storage/get_storage.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -45,7 +42,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           UserController.instance.updateUser(user);
           Get.offAll(() => const MainScreen());
         } else {
-          Get.snackbar("Error", "Email not provided by google");
+          Get.snackbar(
+            "Error",
+            "Email not provided by google",
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
+          );
         }
       }
     });
@@ -71,26 +72,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             password: event.password,
           ));
         } catch (e) {
-          if (e is AppError) Get.snackbar("Verification failed", e.message);
+          if (e is AppError) {
+            Get.snackbar(
+              "Verification failed",
+              e.message,
+              backgroundColor: Get.theme.scaffoldBackgroundColor,
+            );
+          }
         }
       } else {
-        Get.snackbar("Inavalid", "fill all the fiealds");
+        Get.snackbar(
+          "Inavalid",
+          "fill all the fiealds",
+          backgroundColor: Get.theme.scaffoldBackgroundColor,
+        );
       }
     });
 
     on<VerifyOtpEvent>((event, emit) async {
-      print("verify otp");
       if (event.otp.length == 4) {
         try {
           UserModel user = await AuthServices.verifyOtp(
               event.phone, event.otp, event.name, event.password);
           UserController.instance.updateUser(user);
-          Get.offAll(() => MainScreen());
+          Get.offAll(() => const MainScreen());
         } catch (e) {
-          if (e is AppError) Get.snackbar("Verification failed", e.message);
+          if (e is AppError) {
+            Get.snackbar(
+              "Verification failed",
+              e.message,
+              backgroundColor: Get.theme.scaffoldBackgroundColor,
+            );
+          }
         }
       } else {
-        Get.snackbar("Invalid", "Invalid OTP");
+        Get.snackbar(
+          "Invalid",
+          "Invalid OTP",
+          backgroundColor: Get.theme.scaffoldBackgroundColor,
+        );
       }
     });
 
@@ -105,11 +125,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             UserController.instance.updateUser(user);
             Get.offAll(() => const MainScreen());
           } catch (e) {
-            if (e is AppError) Get.snackbar("Verification failed", e.message);
+            if (e is AppError) {
+              Get.snackbar(
+                "Verification failed",
+                e.message,
+                backgroundColor: Get.theme.scaffoldBackgroundColor,
+              );
+            }
           }
         }
       } else {
-        Get.snackbar("Invalid", "Invalid Phone");
+        Get.snackbar(
+          "Invalid",
+          "Invalid Phone",
+          backgroundColor: Get.theme.scaffoldBackgroundColor,
+        );
       }
     });
   }

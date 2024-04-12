@@ -1,7 +1,7 @@
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:train_app/common/constant_variables.dart';
 import 'package:train_app/payment/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:train_app/common/global_variables.dart';
 
 class PaymentServices {
   late PaymentBloc bloc;
@@ -57,7 +57,7 @@ class PaymentServices {
   Future<String?> _fetchKey() async {
     final Dio dio = Dio();
 
-    final response = await dio.get('${GV.baseURi}/raz-key');
+    final response = await dio.get('${CV.baseUri}/raz-key');
     if (response.statusCode == 200) {
       return response.data['key'];
     }
